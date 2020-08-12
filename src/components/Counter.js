@@ -1,5 +1,5 @@
 import React from 'react'
-import Flex, { FlexItem } from "styled-flex-component";
+import Flex from "styled-flex-component";
 
 const index = (props) => {
   return (
