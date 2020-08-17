@@ -2,4 +2,4 @@ export const initialState = {
   counter: 10
 }
 
-export const getCounter = (state = initialState) => state.counter
+export const getCounter = (state = initialState) => state.counter.counter

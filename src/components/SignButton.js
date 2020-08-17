@@ -64,7 +64,7 @@ class SignButton extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return { isSignedIn: state.Auth.isSignedIn };
+  return { isSignedIn: state.auth.isSignedIn };
 };
 
 export default connect(
