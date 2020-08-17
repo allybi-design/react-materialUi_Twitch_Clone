@@ -1,12 +1,10 @@
-import { initialState } from "../selectors";
+import { initialState } from "./selectors";
 
-import { INC_COUNTER, DEC_COUNTER } from "../actions";
+import { INC_COUNTER, DEC_COUNTER } from "./actions";
 
 const counterReducer = (state = initialState, action) => {
-
   switch (action.type) {
     case INC_COUNTER:
-      console.log("call dispatch");
       return {
         ...state,
         counter: state.counter + 1

@@ -1,15 +1,24 @@
 import React from "react";
 import { render } from "react-dom";
+
+//Store Imports
 import { createStore } from "redux";
-// import { combineReducers } from "redux";
-import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import counterReducer from "./store/reducers";
+import { Provider } from "react-redux";
+import {combineReducers, applyMiddleware} from 'redux'; 
+import thunk from 'redux-thunk'
+import {createLogger} from 'redux-logger';
+
+//Store Reducers
+import counterReducer from "store/counter/reducers";
+import authReducers from "store/auth/reducers"
+
+//Theme Imports
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/core/styles";
-
 import theme from "./theme";
 
+//Router Imports
 import { createBrowserHistory } from "history";
 import { Router } from "react-router-dom";
 
@@ -17,14 +26,17 @@ import App from "./App";
 
 const history = createBrowserHistory();
 
-//If more than one Reducer file is imported they musg to combined ->
-// const Reducers = combineReducers({counterReducer,})
+const logger = createLogger({
+  collapsed: true
+});
 
+const rootReducers  = combineReducers({
+  Count:counterReducer,
+  Auth: authReducers
+});
 
-const store = createStore(
-  counterReducer,
-  composeWithDevTools()
-);
+const store = createStore(rootReducers, undefined, composeWithDevTools(applyMiddleware(thunk, logger)))
+
 const renderApp = () => (
   <Provider store={store}>
     <ThemeProvider theme={theme}>
