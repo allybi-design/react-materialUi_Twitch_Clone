@@ -1,5 +1,9 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
+import {connect} from "react-redux"
+
+import {newStream} from "store/streams/actions"
+
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 
@@ -38,6 +42,7 @@ const MaterialUiForm = props => {
 
   const submit = (values)=> {
     console.log(values)
+    props.newStream(values)
   }
 
   const { handleSubmit, pristine, submitting,} = props
@@ -62,8 +67,10 @@ const MaterialUiForm = props => {
     </form>
   )
 }
-
-export default reduxForm({
+const formWrapper = reduxForm({
   form: 'MaterialUiForm', // a unique identifier for this form
   validate,
 })(MaterialUiForm)
+
+
+export default connect(null, {newStream})(formWrapper)

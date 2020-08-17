@@ -1,4 +1,4 @@
-
+import Api from "utils/api";
 
 export const Types = {
   NEW_STREAM: "NEW_STREAM",
@@ -6,9 +6,9 @@ export const Types = {
   GET_STREAMS: "GET_STREAMS",
 };
 
-export const newStream = () => async (dispatch) => {
+export const newStream = values => async (dispatch) => {
   try {
-    await window.gapi.auth2.getAuthInstance().signIn();
+    await Api.post("/streams", values);
     dispatch({
       type: Types.NEW_STREAM,
       payload: "",
