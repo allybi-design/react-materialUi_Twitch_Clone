@@ -39,9 +39,10 @@ export const fetchStreamById = (id) => async (dispatch) => {
   }
 };
 
-export const postStream = (values) => async (dispatch) => {
+export const postStream = (values) => async (dispatch, getState) => {
   try {
-    const res = await Api.post("/streams", values);
+    const {userId} = getState().auth
+    const res = await Api.post("/streams", {...values, userId});
     console.log(res)
     dispatch({
       type: Types.POST_STREAM,

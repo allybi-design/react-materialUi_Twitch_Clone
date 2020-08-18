@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { signIn, signOut } from 'store/auth/actions';
 
 import Button from "@material-ui/core/Button";
-
+import FaIcon from "components/Fa-icon"
 class SignButton extends React.Component {
+  
   componentDidMount() {
     window.gapi.load('client:auth2', () => {
       window.gapi.client
@@ -44,15 +45,15 @@ class SignButton extends React.Component {
     } else if (this.props.isSignedIn) {
       return (
         <Button onClick={this.onSignOutClick} >
-          <i className="google icon" />
+          <FaIcon icon="fas fa-sign-in-alt" />
           Sign Out
         </Button>
       );
     } else {
       return (
         <Button onClick={this.onSignInClick} >
-          <i className="google icon" />
           Sign In with Google
+          <FaIcon icon="fas fa-sign-in-alt" />
         </Button>
       );
     }

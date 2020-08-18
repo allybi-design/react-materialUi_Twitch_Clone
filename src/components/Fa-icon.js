@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(2),
     },
   },
+  iconPadding: {
+    padding: "0 1rem"
+  }
 }));
 
 const FaIcon = (props) => {
@@ -27,7 +30,7 @@ const FaIcon = (props) => {
   }, []);
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root, classes.iconPadding}>
       <Icon className={props.icon} {...props} />
     </div>
   );

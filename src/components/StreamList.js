@@ -1,66 +1,120 @@
-// import React from "react";
+import React, { useEffect } from "react";
 
-// const StreamList = (props) => {
+import {
+  Button,
+  Checkbox,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  ListItemSecondaryAction,
+  Divider,
+} from "@material-ui/core";
+import CommentIcon from "@material-ui/icons/Comment";
+import { makeStyles } from "@material-ui/core/styles";
 
-//   useEffect(() => {
-//     props.onFetchStreams()
-//   });
+import FaIcon from "components/Fa-icon";
 
-//   return (
-//     <div>
-//       <h1>StreamList</h1>
-//       <ul>
-//       {console.log(props.streams)}
-//       {/* props.streams.map((stream) => {
-//         return (
-//           <li>
-//             {stream.id}: {stream.streamTitle} - {stream.streamDescription}
-//           </li>
-//         )
-//       }) */}
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      flexGrow: 1,
+    },
+  },
+  listPadding: {
+    margin: "0rem",
+    paddingBottom: "0.25rem",
+  },
+}));
 
-//       </ul>
-//     </div>
-//   );
-// };
+const StreamList = (props) => {
+  const classes = useStyles();
+  const [checked, setChecked] = React.useState([0]);
 
-// export default StreamList
+  useEffect(() => {
+    props.onFetchStreams();
+  }, []);
 
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { getStreams } from "store/streams/selectors";
-import { fetchStreams } from "store/streams/actions";
+  const handleToggle = (stream) => () => {
+    const currentIndex = checked.indexOf(stream);
+    const newChecked = [...checked];
 
-export class StreamList extends Component {
-  
-  componentDidMount() {
-    this.props.onFetchStreams();
-  }
+    if (currentIndex === -1) {
+      newChecked.push(stream);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+    setChecked(newChecked);
+  };
 
-  render() {
-    return (
-      <div>
-        <h1>StreamList</h1>
-        <ul>
-          {console.log(this.props.streams)}
-          {this.props.streams.map((stream) => {
+  return (
+    <div>
+      <h1>Streams</h1>
+      <h2>Current UserId: {props.currentUserId}</h2>
+      <div className={classes.root}>
+        <Divider />
+        <List>
+          {props.streams.map((stream) => {
             return (
-              <li key={stream.id}>
-                {stream.id}: {stream.title} - {stream.description}
-              </li>
+              <React.Fragment key={stream.id}>
+                <ListItem
+                  role={undefined}
+                  dense
+                  button
+                  onClick={handleToggle(stream)}
+                  // onClick={() => console.log(stream.id)}
+                >
+                  <FaIcon icon="fas fa-camera fa-4x" />
+                  <ListItemText
+                    primary={stream.title}
+                    secondary={stream.description}
+                  />
+                  {/* <ListItemIcon>
+                    <Checkbox
+                      edge="start"
+                      checked={checked.indexOf(stream) !== -1}
+                      tabIndex={-1}
+                      disableRipple
+                      inputProps={{ "aria-labelledby": stream.id }}
+                    />
+                  </ListItemIcon> */}
+                  <ListItemSecondaryAction>
+                    <Button style={{marginLeft: "1rem"}} variant="outlined">
+                      Delete
+                      <FaIcon icon="fa fa-trash" />
+                    </Button>
+                    <Button style={{marginLeft: "1rem"}} variant="outlined">
+                      Edit
+                      <FaIcon icon="far fa-edit" />
+                    </Button>
+                    {/* <IconButton edge="end" aria-label="comments">
+                      <CommentIcon />
+                    </IconButton> */}
+                  </ListItemSecondaryAction>
+                </ListItem>
+                <Divider />
+              </React.Fragment>
             );
           })}
-        </ul>
+        </List>
       </div>
-    );
-  }
+    </div>
+  );
+};
+
+export default StreamList;
+
+{
+  /* <React.Fragment key={stream.id}>
+              <ListItem>
+                <FaIcon icon="fas fa-camera" />
+                <ListItemText >
+                  <h3 className={classes.listPadding}>{stream.title}</h3>
+                  <p className={classes.listPadding}>{stream.description}</p>
+                </ListItemText>
+              </ListItem>
+              <Divider />
+            </React.Fragment> */
 }
-const mapStateToProps = (state) => ({
-  streams: getStreams(state)
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onFetchStreams: () => dispatch(fetchStreams()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(StreamList);
