@@ -1,9 +1,10 @@
 import React from 'react'
+import StreamList from "../components/StreamList"
 
 const StreamListPage = () => {
   return (
     <div>
-      <h1>StreamListPage.js</h1>
+      <StreamList />
     </div>
   )
 }

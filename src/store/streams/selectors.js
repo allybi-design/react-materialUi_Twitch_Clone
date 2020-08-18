@@ -1,5 +1,3 @@
-export const initialState = {
-  counter: 10
-}
+export const initialState = {}
 
-export const getCounter = (state = initialState) => state.counter.counter
+export const getStreams = (state = initialState) => Object.values(state.streams)

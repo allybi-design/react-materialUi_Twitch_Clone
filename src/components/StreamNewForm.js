@@ -2,7 +2,12 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import {connect} from "react-redux"
 
-import {newStream} from "store/streams/actions"
+import {
+  fetchStreams, 
+  fetchStreamById, 
+  postStream, 
+  upDateStreamById, 
+  deleteStreamById} from "store/streams/actions"
 
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
@@ -10,8 +15,8 @@ import Button from '@material-ui/core/Button'
 const validate = values => {
   const errors = {}
   const requiredFields = [
-    'streamTitle',
-    'streamDescription',
+    'title',
+    'description',
   ]
   requiredFields.forEach(field => {
     if (!values[field]) {
@@ -41,8 +46,7 @@ const renderTextField = ({
 const MaterialUiForm = props => {
 
   const submit = (values)=> {
-    console.log(values)
-    props.newStream(values)
+    props.onPostStream(values)
   }
 
   const { handleSubmit, pristine, submitting,} = props
@@ -50,14 +54,14 @@ const MaterialUiForm = props => {
     <form onSubmit={handleSubmit(submit)}>
       <div>
         <Field
-          name="streamTitle"
+          name="title"
           component={renderTextField}
           label="Stream Title"
         />
       </div>
       <div>
         <Field 
-          name="streamDescription" 
+          name="description" 
           component={renderTextField} 
           label="Stream Description" />
       </div>
@@ -72,5 +76,17 @@ const formWrapper = reduxForm({
   validate,
 })(MaterialUiForm)
 
+const mapStateToProps = (state) => ({
+  // getStream: getStream(state)
+});
 
-export default connect(null, {newStream})(formWrapper)
+const mapDispatchToProps = (dispatch) => ({
+  onFetchStreams: () => dispatch(fetchStreams()),
+  onFetchStreamById: (id) => dispatch(fetchStreamById(id)),
+  onPostStream: (values) => dispatch(postStream(values)),
+  onUpDateStreamById: (values, id) => dispatch(upDateStreamById(values, id)),
+  onDeleteStreamById: (id) => dispatch(deleteStreamById(id)),  
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(formWrapper)
