@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 
 import {
   Button,
-  Checkbox,
-  IconButton,
+  // Checkbox,
+  // IconButton,
   List,
   ListItem,
   ListItemText,
-  ListItemIcon,
+  // ListItemIcon,
   ListItemSecondaryAction,
   Divider,
 } from "@material-ui/core";
-import CommentIcon from "@material-ui/icons/Comment";
+// import CommentIcon from "@material-ui/icons/Comment";
 import { makeStyles } from "@material-ui/core/styles";
 
 import FaIcon from "components/Fa-icon";
@@ -49,6 +49,10 @@ const StreamList = (props) => {
     setChecked(newChecked);
   };
 
+  const disabled = (id) => {
+    return id !== props.currentUserId
+  }
+
   return (
     <div>
       <h1>Streams</h1>
@@ -81,11 +85,11 @@ const StreamList = (props) => {
                     />
                   </ListItemIcon> */}
                   <ListItemSecondaryAction>
-                    <Button style={{marginLeft: "1rem"}} variant="outlined">
+                    <Button style={{marginLeft: "1rem"}} variant="outlined" disabled={disabled(stream.userId)}>
                       Delete
                       <FaIcon icon="fa fa-trash" />
                     </Button>
-                    <Button style={{marginLeft: "1rem"}} variant="outlined">
+                    <Button style={{marginLeft: "1rem"}} variant="outlined" disabled={disabled(stream.userId)}>
                       Edit
                       <FaIcon icon="far fa-edit" />
                     </Button>
@@ -105,16 +109,3 @@ const StreamList = (props) => {
 };
 
 export default StreamList;
-
-{
-  /* <React.Fragment key={stream.id}>
-              <ListItem>
-                <FaIcon icon="fas fa-camera" />
-                <ListItemText >
-                  <h3 className={classes.listPadding}>{stream.title}</h3>
-                  <p className={classes.listPadding}>{stream.description}</p>
-                </ListItemText>
-              </ListItem>
-              <Divider />
-            </React.Fragment> */
-}
