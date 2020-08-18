@@ -1,6 +1,6 @@
 import React from 'react'
 
-const StreamDeletePage = () => {
+const StreamDeletePage = (props) => {
   return (
     <div>
       <h1>StreamDeletePage.js</h1>

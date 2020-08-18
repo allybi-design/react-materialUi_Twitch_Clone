@@ -1,10 +1,10 @@
 import React from 'react'
 import StreamNewFrom from "components/StreamNewForm"
 
-const StreamCreatePage = () => {
+const StreamCreatePage = (props) => {
   return (
     <div>
-      <StreamNewFrom />
+      <StreamNewFrom {...props}/>
     </div>
   )
 }
