@@ -2,23 +2,22 @@ import React, { useEffect } from "react";
 
 import {
   Button,
-  // Checkbox,
-  // IconButton,
+  Checkbox,
   List,
   ListItem,
   ListItemText,
-  // ListItemIcon,
+  ListItemIcon,
   ListItemSecondaryAction,
   Divider,
 } from "@material-ui/core";
-// import CommentIcon from "@material-ui/icons/Comment";
+
 import { makeStyles } from "@material-ui/core/styles";
 
 import FaIcon from "components/Fa-icon";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& > *': {
+    "& > *": {
       margin: theme.spacing(1),
       flexGrow: 1,
     },
@@ -50,8 +49,8 @@ const StreamList = (props) => {
   };
 
   const disabled = (id) => {
-    return id !== props.currentUserId
-  }
+    return id !== props.currentUserId;
+  };
 
   return (
     <div>
@@ -75,21 +74,31 @@ const StreamList = (props) => {
                     primary={stream.title}
                     secondary={stream.description}
                   />
-                  {/* <ListItemIcon>
-                    <Checkbox
-                      edge="start"
-                      checked={checked.indexOf(stream) !== -1}
-                      tabIndex={-1}
-                      disableRipple
-                      inputProps={{ "aria-labelledby": stream.id }}
-                    />
-                  </ListItemIcon> */}
                   <ListItemSecondaryAction>
-                    <Button style={{marginLeft: "1rem"}} variant="outlined" disabled={disabled(stream.userId)}>
+                    <ListItemIcon>
+                      <Checkbox
+                        edge="start"
+                        checked={checked.indexOf(stream) !== -1}
+                        tabIndex={-1}
+                        disableRipple
+                        inputProps={{ "aria-labelledby": stream.id }}
+                      />
+                    </ListItemIcon>
+                    <Button
+                      style={{ marginLeft: "1rem" }}
+                      variant="outlined"
+                      disabled={disabled(stream.userId)}
+                      color="secondary"
+                    >
                       Delete
                       <FaIcon icon="fa fa-trash" />
                     </Button>
-                    <Button style={{marginLeft: "1rem"}} variant="outlined" disabled={disabled(stream.userId)}>
+                    <Button
+                      style={{ marginLeft: "1rem" }}
+                      variant="outlined"
+                      disabled={disabled(stream.userId)}
+                      color="primary"
+                    >
                       Edit
                       <FaIcon icon="far fa-edit" />
                     </Button>
@@ -103,6 +112,14 @@ const StreamList = (props) => {
             );
           })}
         </List>
+        <Button onClick={() => props.history.push("/streams/new")}
+          style={{ marginLeft: "1rem" }}
+          variant="contained"
+          color="primary"
+        >
+          <FaIcon icon="fas fa-folder-plus" />
+          Create Stream
+        </Button>
       </div>
     </div>
   );
