@@ -10,7 +10,7 @@ import {
 
 import MenuDrawer from "components/MenuDrawer";
 import FaIcon from "components/Fa-icon";
-import SignButton from "components/SignButton"
+import SignButtonCont from "containers/SignButtonCont"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,7 +69,7 @@ const ButtonAppBar = () => {
             Material-Ui-Twitch Clone
           </Typography>
 
-          <SignButton />
+          <SignButtonCont />
 
         </Toolbar>
       </AppBar>

@@ -32,9 +32,14 @@ const StreamList = (props) => {
   const classes = useStyles();
   const [checked, setChecked] = React.useState([0]);
 
+  const streams = props.streams;
+
   useEffect(() => {
-    props.onFetchStreams();
-  }, []);
+    if (streams.length === 0) {
+      props.onFetchStreams();
+      console.log("Fetch Streams");
+    }
+  });
 
   const handleToggle = (stream) => () => {
     const currentIndex = checked.indexOf(stream);
@@ -112,7 +117,9 @@ const StreamList = (props) => {
             );
           })}
         </List>
-        <Button onClick={() => props.history.push("/streams/new")}
+
+        <Button
+          onClick={() => props.history.push("/streams/new")}
           style={{ marginLeft: "1rem" }}
           variant="contained"
           color="primary"
