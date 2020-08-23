@@ -4,6 +4,7 @@ import Container from "@material-ui/core/Container";
 
 import Header from "components/Header";
 import Footer from "components/Footer";
+import LoadSpinner from "components/LoadSpinner"
 
 const StreamList = lazy(() => import("pages/StreamListPage"))
 const StreamCreate = lazy(() => import("pages/StreamCreatePage"))
@@ -16,11 +17,11 @@ const App = () => {
     <div className="App">
       <Header />
       <Container>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadSpinner />}>
         <Switch>
           <Route path="/" exact component={StreamList} />
           <Route path="/streams/new" component={StreamCreate} />
-          <Route path="/streams/edit" component={StreamEdit} />
+          <Route path="/streams/edit/:id" component={StreamEdit} />
           <Route path="/streams/delete" component={StreamDelete} />
           <Route path="/streams/show" component={StreamShow} />
         </Switch>

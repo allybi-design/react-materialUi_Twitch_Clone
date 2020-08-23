@@ -1,10 +1,11 @@
 import React from 'react'
-import StreamCreateForm from "components/StreamCreateForm"
+import StreamCreate from "../containers/StreamCreateCont"
 
 const StreamCreatePage = (props) => {
   return (
     <div>
-      <StreamCreateForm {...props}/>
+      <h1>Create a New Stream</h1>
+      <StreamCreate {...props}/>
     </div>
   )
 }

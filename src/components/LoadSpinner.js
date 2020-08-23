@@ -1,29 +1,23 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles';
-
-import FaIcon from "components/Fa-icon";
+import React from "react";
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  modal: {
-    position: "absolute",
-    left: "0",
-    height: "100vh",
-    width: "100vw",
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: "rgba(0, 0, 0, 0.5)"
-  }
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
 }));
 
 const LoadSpinner = () => {
   const classes = useStyles();
-
+ 
   return (
-    <div className={classes.modal}>
-      <FaIcon icon="fas fa-spinner fa-10x fa-spin" />      
-    </div>
-  )
+    <Backdrop className={classes.backdrop} open={true}>
+      <CircularProgress color="inherit" fontSize="large"/>
+    </Backdrop>
+  );
 }
 
 export default LoadSpinner

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import {
-  Button,
   Checkbox,
   List,
   ListItem,
@@ -14,6 +14,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 
 import FaIcon from "components/Fa-icon";
+import Button from "components/Button";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,18 +29,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const StreamList = (props) => {
+const StreamList = ({
+  streams,
+  currentUserId,
+  onFetchStreams,
+  onDeleteStream,
+  history,
+}) => {
   const classes = useStyles();
   const [checked, setChecked] = React.useState([0]);
 
-  const streams = props.streams;
-
   useEffect(() => {
-    if (streams.length === 0) {
-      props.onFetchStreams();
-      console.log("Fetch Streams");
-    }
-  });
+    onFetchStreams();
+  }, [onFetchStreams]);
 
   const handleToggle = (stream) => () => {
     const currentIndex = checked.indexOf(stream);
@@ -53,18 +55,22 @@ const StreamList = (props) => {
     setChecked(newChecked);
   };
 
+  const handleDelete = (id) => {
+    onDeleteStream(id);
+  };
+
   const disabled = (id) => {
-    return id !== props.currentUserId;
+    return id !== currentUserId;
   };
 
   return (
     <div>
       <h1>Streams</h1>
-      <h2>Current UserId: {props.currentUserId}</h2>
+      <h2>Current UserId: {currentUserId}</h2>
       <div className={classes.root}>
         <Divider />
         <List>
-          {props.streams.map((stream) => {
+          {streams.map((stream) => {
             return (
               <React.Fragment key={stream.id}>
                 <ListItem
@@ -72,7 +78,6 @@ const StreamList = (props) => {
                   dense
                   button
                   onClick={handleToggle(stream)}
-                  // onClick={() => console.log(stream.id)}
                 >
                   <FaIcon icon="fas fa-camera fa-4x" />
                   <ListItemText
@@ -90,26 +95,21 @@ const StreamList = (props) => {
                       />
                     </ListItemIcon>
                     <Button
-                      style={{ marginLeft: "1rem" }}
+                      onClick={() => handleDelete(stream.id)}
+                      color="red"
                       variant="outlined"
                       disabled={disabled(stream.userId)}
-                      color="secondary"
                     >
                       Delete
                       <FaIcon icon="fa fa-trash" />
                     </Button>
                     <Button
-                      style={{ marginLeft: "1rem" }}
                       variant="outlined"
                       disabled={disabled(stream.userId)}
-                      color="primary"
                     >
-                      Edit
+                      <Link to={`/streams/edit/${stream.id}`}>EDIT</Link>
                       <FaIcon icon="far fa-edit" />
                     </Button>
-                    {/* <IconButton edge="end" aria-label="comments">
-                      <CommentIcon />
-                    </IconButton> */}
                   </ListItemSecondaryAction>
                 </ListItem>
                 <Divider />
@@ -118,15 +118,16 @@ const StreamList = (props) => {
           })}
         </List>
 
-        <Button
-          onClick={() => props.history.push("/streams/new")}
-          style={{ marginLeft: "1rem" }}
-          variant="contained"
-          color="primary"
-        >
-          <FaIcon icon="fas fa-folder-plus" />
-          Create Stream
-        </Button>
+        {currentUserId && (
+          <Button
+            onClick={() => history.push("/streams/new")}
+            variant="contained"
+            color="green"
+          >
+            <FaIcon icon="fas fa-folder-plus" />
+            Create New Stream
+          </Button>
+        )}
       </div>
     </div>
   );

@@ -1,10 +1,9 @@
 import React from 'react'
+import Modal from "components/Model"
 
 const StreamDeletePage = (props) => {
   return (
-    <div>
-      <h1>StreamDeletePage.js</h1>
-    </div>
+    <Modal />
   )
 }
 

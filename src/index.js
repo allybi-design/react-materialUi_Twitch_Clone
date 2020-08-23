@@ -11,12 +11,12 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme";
 
 //Router Imports
-import { createBrowserHistory } from "history";
+
+import history from "./history";
 import { Router } from "react-router-dom";
 
 import App from "./App";
 
-const history = createBrowserHistory();
 
 const renderApp = () => (
   <Provider store={store}>
