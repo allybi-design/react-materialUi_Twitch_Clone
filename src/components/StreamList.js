@@ -1,133 +1,109 @@
-import React from "react";
-import history from "../history";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import {
-  // Checkbox,
   List,
   ListItem,
   ListItemText,
-  // ListItemIcon,
   ListItemSecondaryAction,
   Divider,
 } from "@material-ui/core";
 
+import { makeStyles } from "@material-ui/core/styles";
+
 import FaIcon from "components/Fa-icon";
 import Button from "components/Button";
 
-class StreamList extends React.Component {
-  // const [checked, setChecked] = useState([0]);
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& > *": {
+      margin: theme.spacing(1),
+      flexGrow: 1,
+    },
+  },
+  listPadding: {
+    margin: "0rem",
+    paddingBottom: "0.25rem",
+  },
+}));
 
-  // useEffect(() => {
-  //   onFetchStreams();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+const StreamList = ({
+  streams,
+  currentUserId,
+  onFetchStreams,
+  onDeleteStream,
+  history,
+}) => {
+  const classes = useStyles();
+  
+  useEffect(() => {
+    onFetchStreams();
+  }, [onFetchStreams]);
 
-  // handleToggle = (stream) => () => {
-  //   const currentIndex = checked.indexOf(this.props.stream);
-  //   const newChecked = [...checked];
-
-  //   if (currentIndex === -1) {
-  //     newChecked.push(stream);
-  //   } else {
-  //     newChecked.splice(currentIndex, 1);
-  //   }
-  //   setChecked(newChecked);
-  // };
-
-  componentDidMount() {
-    this.props.onFetchStreams();
-  }
-
-  handleDelete = (id) => {
-    this.props.onDeleteStream(id);
+  
+  const disabled = (id) => {
+    return id !== currentUserId;
   };
 
-  disabled = (id) => {
-    return id !== this.props.currentUserId;
-  };
+  return (
+    <div>
+      <h1>Streams</h1>
+      <h2>Current User Id: {currentUserId}</h2>
+      <div className={classes.root}>
+        <Divider />
+        <List>
+          {streams.map((stream) => {
+            return (
+              <React.Fragment key={stream.id}>
+                <ListItem
+                  role={undefined}
+                  dense
+                  button
+                  onClick={() => history.push(`/streams/show/${stream.id}`)}
+                >
+                  <FaIcon icon="fas fa-camera fa-4x" />
+                  <ListItemText
+                    primary={stream.title}
+                    secondary={stream.description}
+                  />
+                  <ListItemSecondaryAction>
+                    <Button
+                      onClick={() => onDeleteStream(stream.id)}
+                      color="red"
+                      variant="outlined"
+                      disabled={disabled(stream.userId)}
+                    >
+                      Delete
+                      <FaIcon icon="fa fa-trash" />
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      disabled={disabled(stream.userId)}
+                    >
+                      <Link to={`/streams/edit/${stream.id}`}>EDIT</Link>
+                      <FaIcon icon="far fa-edit" />
+                    </Button>
+                  </ListItemSecondaryAction>
+                </ListItem>
+                <Divider />
+              </React.Fragment>
+            );
+          })}
+        </List>
 
-  renderAdmin(stream) {
-    if (stream.userId === this.props.currentUserId) {
-      return (
-        <React.Fragment>
+        {currentUserId && (
           <Button
-            onClick={() => history.push(`/streams/delete/${stream.id}`)}
-            color="red"
-            variant="outlined"
-            // disabled={disabled(stream.userId)}
+            onClick={() => history.push("/streams/new")}
+            variant="contained"
+            color="green"
           >
-            Delete
-            <FaIcon icon="fa fa-trash" />
+            <FaIcon icon="fas fa-folder-plus" />
+            Create New Stream
           </Button>
-          <Button
-            onClick={() => history.push(`/streams/edit/${stream.id}`)}
-            variant="outlined"
-            // disabled={disabled(stream.userId)}
-          >
-            EDIT
-            <FaIcon icon="far fa-edit" />
-          </Button>
-        </React.Fragment>
-      );
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        <h1>Streams</h1>
-        <h2>Current UserId: {this.props.currentUserId}</h2>
-        <div>
-          <Divider />
-          <List>
-            {this.props.streams.map((stream) => {
-              return (
-                <React.Fragment key={stream.id}>
-                  <ListItem
-                    role={undefined}
-                    dense
-                    button
-                    // onClick={handleToggle(stream)}
-                  >
-                    <FaIcon icon="fas fa-camera fa-4x" />
-                    <ListItemText
-                      primary={stream.title}
-                      secondary={stream.description}
-                    />
-                    <ListItemSecondaryAction>
-                      {/* <ListItemIcon>
-                        <Checkbox
-                          edge="start"
-                          // checked={checked.indexOf(stream) !== -1}
-                          tabIndex={-1}
-                          disableRipple
-                          inputProps={{ "aria-labelledby": stream.id }}
-                        />
-                      </ListItemIcon> */}
-
-                      {this.renderAdmin(stream)}
-                    </ListItemSecondaryAction>
-                  </ListItem>
-                  <Divider />
-                </React.Fragment>
-              );
-            })}
-          </List>
-
-          {this.props.currentUserId && (
-            <Button
-              onClick={() => history.push("/streams/new")}
-              variant="contained"
-              color="green"
-            >
-              <FaIcon icon="fas fa-folder-plus" />
-              Create New Stream
-            </Button>
-          )}
-        </div>
+        )}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default StreamList;
