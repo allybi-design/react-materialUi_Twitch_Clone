@@ -69,7 +69,7 @@ export default SignButton
   // const SignButton = (props) => {
   //   let auth = null
     
-  //   useEffect(() => {
+  //   React.useEffect(() => {
   //     window.gapi.load("client:auth2", () => {
   //       window.gapi.client
   //       .init({

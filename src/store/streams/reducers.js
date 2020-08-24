@@ -25,11 +25,17 @@ const streamReducer = (state = initialState, { type, payload }) => {
         [payload.id]: payload,
       };
     case Types.DELETE_STREAM_BY_ID:
-      return _.omit(state, payload);
+      return _.omit(state.streams, payload)
+      // console.log(typeof(state))
+      // return {
+      //   ...state,
+      //   streams: state.streams.filter(stream => stream.id !== payload)
+      // }
+      
     case Types.STREAM_FAIL:
       return {
         ...state,
-        [payload.id]: payload,
+        error: payload,
       };
     default:
       return state;

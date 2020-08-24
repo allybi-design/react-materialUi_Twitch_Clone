@@ -83,6 +83,7 @@ export const upDateStreamById = (values, id) => async (dispatch,  getState) => {
 };
 
 export const deleteStreamById = (id) => async (dispatch) => {
+  console.log(`Deleted stream ${id}`)
   try {
     await Api.delete(`/streams/${id}`);
     // NB. on a APi.delete requests there is NO response object returned
@@ -90,6 +91,9 @@ export const deleteStreamById = (id) => async (dispatch) => {
       type: Types.DELETE_STREAM_BY_ID,
       payload: id,
     });
+
+    history.push("/")
+    
   } catch (error) {
     dispatch({
       type: Types.STREAM_FAIL,

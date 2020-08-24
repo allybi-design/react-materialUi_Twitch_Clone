@@ -26,7 +26,7 @@ const validate = (values) => {
 };
 
 const StreamForm = (props) => {
-  console.log(props)
+  console.log(props);
   const classes = useStyles();
 
   const submit = (values) => {

@@ -1,10 +1,11 @@
 import React from 'react'
-import LoadSpinner from "components/LoadSpinner";
+// import LoadSpinner from "components/LoadSpinner";
 
 const StreamShowPage = (props) => {
   return (
     <div>
-      <LoadSpinner />
+      {/* <LoadSpinner /> */}
+      <h1>Show Page</h1>
     </div>
   )
 }

@@ -1,22 +1,30 @@
 import React from "react";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Drawer, Divider, IconButton, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import {
+  Drawer,
+  Divider,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@material-ui/core";
 
-import FaIcon from "components/Fa-icon"
+import FaIcon from "components/Fa-icon";
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex"
+    display: "flex",
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0
+    flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
   },
   drawerHeader: {
     display: "flex",
@@ -24,8 +32,8 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-    justifyContent: "flex-start"
-  }
+    justifyContent: "flex-start",
+  },
 }));
 
 const MenuDrawer = (props) => {
@@ -39,7 +47,7 @@ const MenuDrawer = (props) => {
         anchor="left"
         open={props.drawerState}
         classes={{
-          paper: classes.drawerPaper
+          paper: classes.drawerPaper,
         }}
       >
         <div className={classes.drawerHeader}>
@@ -51,55 +59,54 @@ const MenuDrawer = (props) => {
         <Divider />
 
         <List>
-        <ListItem >
+          <ListItem>
             <ListItemIcon>
               <FaIcon icon="far fa-circle" />
             </ListItemIcon>
             <Link to="/">
-            <ListItemText primary="Home" />
+              <ListItemText primary="Home" />
             </Link>
           </ListItem>
 
-          <ListItem >
+          <ListItem>
             <ListItemIcon>
               <FaIcon icon="far fa-circle" />
             </ListItemIcon>
             <Link to="/streams/new">
-            <ListItemText primary="Create New" />
+              <ListItemText primary="Create New" />
             </Link>
           </ListItem>
 
-          <ListItem >
+          <ListItem>
             <ListItemIcon>
               <FaIcon icon="far fa-circle" />
             </ListItemIcon>
             <Link to="/streams/edit">
-            <ListItemText primary="Edit" />
+              <ListItemText primary="Edit" />
             </Link>
           </ListItem>
 
-          <ListItem >
+          <ListItem>
             <ListItemIcon>
               <FaIcon icon="far fa-circle" />
             </ListItemIcon>
             <Link to="/streams/delete">
-            <ListItemText primary="Delete" />
+              <ListItemText primary="Delete" />
             </Link>
           </ListItem>
 
-          <ListItem >
+          <ListItem>
             <ListItemIcon>
               <FaIcon icon="far fa-circle" />
             </ListItemIcon>
             <Link to="/streams/show">
-            <ListItemText primary="Show" />
+              <ListItemText primary="Show" />
             </Link>
           </ListItem>
         </List>
-        
       </Drawer>
     </div>
-  )
-}
+  );
+};
 
-export default MenuDrawer
+export default MenuDrawer;
