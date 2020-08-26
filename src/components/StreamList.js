@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import history from "../history";
 
 import {
   List,
@@ -35,12 +36,19 @@ const StreamList = ({
   history,
 }) => {
   const classes = useStyles();
-  
+
   useEffect(() => {
     onFetchStreams();
   }, [onFetchStreams]);
 
-  
+  const handleDelete = (id) => {
+    history.push(`/streams/delete/${id}`);
+  };
+
+  const handleEdit = (id) => {
+    history.push(`/streams/edit/${id}`);
+  };
+
   const disabled = (id) => {
     return id !== currentUserId;
   };
@@ -68,7 +76,7 @@ const StreamList = ({
                   />
                   <ListItemSecondaryAction>
                     <Button
-                      onClick={() => onDeleteStream(stream.id)}
+                      onClick={() => handleDelete(stream.id)}
                       color="red"
                       variant="outlined"
                       disabled={disabled(stream.userId)}
@@ -79,8 +87,9 @@ const StreamList = ({
                     <Button
                       variant="outlined"
                       disabled={disabled(stream.userId)}
+                      onClick={() => handleEdit(stream.id)}
                     >
-                      <Link to={`/streams/edit/${stream.id}`}>EDIT</Link>
+                      Edit
                       <FaIcon icon="far fa-edit" />
                     </Button>
                   </ListItemSecondaryAction>

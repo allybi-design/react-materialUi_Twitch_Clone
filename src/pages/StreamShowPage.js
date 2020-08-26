@@ -4,8 +4,8 @@ import React from 'react'
 const StreamShowPage = (props) => {
   return (
     <div>
-      {/* <LoadSpinner /> */}
       <h1>Show Page</h1>
+      <h3>{props.stream.id}</h3>
     </div>
   )
 }

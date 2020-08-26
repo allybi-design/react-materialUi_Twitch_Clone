@@ -9,8 +9,8 @@ import LoadSpinner from "components/LoadSpinner"
 const StreamList = lazy(() => import("pages/StreamListPage"))
 const StreamCreate = lazy(() => import("pages/StreamCreatePage"))
 const StreamEdit = lazy(() => import("pages/StreamEditPage"))
-const StreamDelete = lazy(() => import("./containers/StreamDeletePageCont"))
-const StreamShow = lazy(() => import("pages/StreamShowPage"))
+const StreamDelete = lazy(() => import("containers/StreamDeletePageCont"))
+const StreamShow = lazy(() => import("containers/StreamShowPageCont"))
 
 const App = () => {
   return (
